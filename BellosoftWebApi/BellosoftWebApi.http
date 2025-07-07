@@ -1,0 +1,6 @@
+@BellosoftWebApi_HostAddress = http://localhost:5085
+
+GET {{BellosoftWebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

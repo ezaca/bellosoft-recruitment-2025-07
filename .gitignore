@@ -7,6 +7,14 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/Dotnet.gitignore
 
+# User configurations
+# In this project, there is no need for this files
+/.vs/*
+
+# Configuration files
+BellosoftWebApi/appsettings.Development.json
+BellosoftWebApi/appsettings.Production.json
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
