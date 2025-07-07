@@ -21,13 +21,6 @@ namespace BellosoftWebApi.Boot
         {
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString(DefaultConnection)));
-
-            builder.Services.AddDistributedSqlServerCache(options =>
-            {
-                options.ConnectionString = builder.Configuration.GetConnectionString(DefaultConnection);
-                options.SchemaName = "dbo";
-                options.TableName = "Sessions";
-            });
         }
 
         public void SetupAuth()
