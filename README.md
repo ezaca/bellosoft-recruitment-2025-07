@@ -31,4 +31,11 @@ Para executar o projeto, espera-se os seguintes requisitos:
 
 # Instalação do Teste
 
+Siga estes passos antes de iniciar o teste:
+
+1. Crie um arquivo `BellosoftWebApi/appsettings.Development.json` com o seguinte conteúdo:
+<br><br><pre>{<br>&nbsp;&nbsp;"ConnectionStrings": {<br>&nbsp;&nbsp;&nbsp;&nbsp;"DefaultConnection": "Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=bellosoft-recruitment-2025-07;Integrated Security=True;"<br>&nbsp;&nbsp;}<br>}</pre>
+1. Abra o Power Shell no diretório do **projeto** e entre o comando `dotnet ef database update`
+    - Pode ser necessário instalar a ferramenta: `dotnet tool install --global dotnet-ef`
+
 *Aqui será adicionado um tutorial de como configurar e preparar o projeto para execução*.
