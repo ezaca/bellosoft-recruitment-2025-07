@@ -20,5 +20,7 @@
             CreatedAt = DateTime.UtcNow;
             UpdatedAt = DateTime.UtcNow;
         }
+
+        public bool IsSoftDeleted => DeletedAt is not null && DeletedAt < DateTime.UtcNow;
     }
 }

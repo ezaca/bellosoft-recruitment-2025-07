@@ -4,10 +4,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var boot = new AppBootServices(builder);
-boot.SetupDatabase();
-boot.SetupAuth();
-boot.SetupControllers();
-boot.SetupSwagger();
+boot.AddDatabase();
+boot.AddAuth();
+boot.AddControllers();
+boot.AddSwagger();
+boot.AddInfrastructureServices();
+boot.AddApplicationServices();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

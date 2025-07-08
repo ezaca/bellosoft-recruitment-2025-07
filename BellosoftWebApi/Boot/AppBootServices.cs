@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using BellosoftWebApi.Facades;
+using BellosoftWebApi.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 namespace BellosoftWebApi.Boot
@@ -17,13 +19,13 @@ namespace BellosoftWebApi.Boot
             this.builder = builder;
         }
 
-        public void SetupDatabase()
+        public void AddDatabase()
         {
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString(DefaultConnection)));
         }
 
-        public void SetupAuth()
+        public void AddAuth()
         {
             builder.Services.AddAuthentication("Cookies").AddCookie("Cookies", SetupAuthCookie);
             builder.Services.AddAuthorization();
@@ -41,16 +43,26 @@ namespace BellosoftWebApi.Boot
             options.Cookie.SameSite = SameSiteMode.Strict;
         }
 
-        public void SetupControllers()
+        public void AddControllers()
         {
             builder.Services.AddControllers();
         }
 
-        public void SetupSwagger()
+        public void AddSwagger()
         {
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+        }
+
+        public void AddInfrastructureServices()
+        {
+            builder.Services.AddHttpContextAccessor();
+        }
+
+        public void AddApplicationServices()
+        {
+            builder.Services.AddScoped<IAuthenticatedUser, AuthenticatedUserService>();
         }
     }
 }
