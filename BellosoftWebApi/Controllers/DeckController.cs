@@ -8,6 +8,7 @@ using BellosoftWebApi.Services.Sqids;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace BellosoftWebApi.Controllers
 {
@@ -64,8 +65,10 @@ namespace BellosoftWebApi.Controllers
                 return NotFound(new MessageResponse("Baralho não encontrado"));
 
             User user = new User(authUser.Id);
+            EntityEntry<User> userEntity = context.Entry(user);
             context.Attach(user);
-            context.Entry(user).SetProperty(user => user.SelectedDeckId, deck.Id);
+            userEntity.SetProperty(user => user.SelectedDeckId, deck.Id);
+            userEntity.SetProperty(u => u.UpdatedAt, DateTime.UtcNow);
             await context.SaveChangesAsync();
             
             return Ok(new DeckResponse(sqids, deck.Id, deck.RemainingCards));
@@ -164,6 +167,7 @@ namespace BellosoftWebApi.Controllers
                 return StatusCode(503, new MessageResponse($"Erro ao sacar uma carta, tente novamente ou verifique a disponibilidade do serviço. Erro externo: {apiResponse.Error}"));
 
             deck.RemainingCards = apiResponse.Remaining;
+            deck.UpdatedAt = DateTime.UtcNow;
             await context.SaveChangesAsync();
 
             return Ok(new DrawCardResponse(sqids, deck.Id, apiResponse.Remaining, apiResponse.Cards));
@@ -172,8 +176,10 @@ namespace BellosoftWebApi.Controllers
         private void ChangeSelectedDeck(int userId, int? deckId)
         {
             User user = new User(userId);
+            EntityEntry<User> userEntity = context.Entry(user);
             context.Attach(user);
-            context.Entry(user).SetProperty(user => user.SelectedDeckId, deckId);
+            userEntity.SetProperty(u => u.SelectedDeckId, deckId);
+            userEntity.SetProperty(u => u.UpdatedAt, DateTime.UtcNow);
         }
     }
 }
