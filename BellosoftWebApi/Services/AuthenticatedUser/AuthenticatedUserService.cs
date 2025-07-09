@@ -1,5 +1,4 @@
-﻿using BellosoftWebApi.Facades;
-using BellosoftWebApi.Models;
+﻿using BellosoftWebApi.Models;
 using System.Security.Claims;
 
 namespace BellosoftWebApi.Services

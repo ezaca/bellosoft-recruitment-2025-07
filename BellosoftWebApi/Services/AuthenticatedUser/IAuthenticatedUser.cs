@@ -1,6 +1,6 @@
 ﻿using BellosoftWebApi.Models;
 
-namespace BellosoftWebApi.Facades
+namespace BellosoftWebApi.Services
 {
     public interface IAuthenticatedUser
     {

@@ -1,5 +1,6 @@
-﻿using BellosoftWebApi.Facades;
+﻿using BellosoftWebApi.Configurations;
 using BellosoftWebApi.Services;
+using BellosoftWebApi.Services.Sqids;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -58,11 +59,14 @@ namespace BellosoftWebApi.Boot
         public void AddInfrastructureServices()
         {
             builder.Services.AddHttpContextAccessor();
+            builder.Services.AddHttpClient<IDeckOfCards, DeckOfCardsService>();
+            builder.Services.AddScoped<ISqidsGenerator, SqidsGeneratorService>();
         }
 
         public void AddApplicationServices()
         {
             builder.Services.AddScoped<IAuthenticatedUser, AuthenticatedUserService>();
+            builder.Services.Configure<DeckOfCardsConfiguration>(builder.Configuration.GetSection("DeckOfCardsApi"));
         }
     }
 }

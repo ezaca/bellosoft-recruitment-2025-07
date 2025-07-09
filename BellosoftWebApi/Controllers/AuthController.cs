@@ -1,8 +1,9 @@
-﻿using BellosoftWebApi.Facades;
-using BellosoftWebApi.Models;
+﻿using BellosoftWebApi.Models;
 using BellosoftWebApi.Requests;
 using BellosoftWebApi.Responses;
+using BellosoftWebApi.Services;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -47,7 +48,7 @@ namespace BellosoftWebApi.Controllers
         [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        public async Task<IActionResult> Login([FromBody]LoginRequest request)
         {
             await HttpContext.SignOutAsync("Cookies");
 
@@ -85,6 +86,7 @@ namespace BellosoftWebApi.Controllers
             return Ok(new MessageResponse("Sessão finalizada"));
         }
 
+        [Authorize]
         [HttpPost("change-password")]
         [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status401Unauthorized)]
