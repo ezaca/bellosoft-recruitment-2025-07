@@ -1,10 +1,10 @@
-﻿using BellosoftWebApi.Models;
+﻿using BellosoftWebApi.Services.AuthenticatedUser;
 
 namespace BellosoftWebApi.Services
 {
     public interface IAuthenticatedUser
     {
         int? GetUserId();
-        Task<User?> GetActiveUser();
+        Task<AuthUserData?> GetActiveUser();
     }
 }

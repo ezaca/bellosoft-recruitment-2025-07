@@ -13,6 +13,11 @@
 
         public User() { }
 
+        public User(int id)
+        {
+            Id = id;
+        }
+
         public User(string email, string password)
         {
             Email = email;
