@@ -32,6 +32,8 @@ namespace BellosoftWebApi.Controllers
         [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status409Conflict)]
         public async Task<IActionResult> Signup([FromBody]LoginRequest request)
         {
+            await HttpContext.SignOutAsync("Cookies");
+
             string email = request.Email;
             string passwordHash = BCryptNet.HashPassword(request.Password);
 
