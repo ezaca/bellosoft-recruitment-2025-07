@@ -158,6 +158,9 @@ namespace BellosoftWebApi.Controllers
             if (deck is null || deck.UserId != authUser.Id || deck.DeletedAt is not null)
                 return NotFound(new MessageResponse("Baralho não encontrado"));
 
+            if (count > deck.RemainingCards)
+                return BadRequest(new MessageResponse($"Não há {count} cartas no baralho, somente {deck.RemainingCards}"));
+
             var apiResponse = await api.DrawCard(deck.ExternalName, count);
 
             if (apiResponse is null)
