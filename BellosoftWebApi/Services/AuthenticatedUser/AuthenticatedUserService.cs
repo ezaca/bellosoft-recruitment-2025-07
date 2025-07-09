@@ -1,5 +1,6 @@
-﻿using BellosoftWebApi.Facades;
-using BellosoftWebApi.Models;
+﻿using BellosoftWebApi.Models;
+using BellosoftWebApi.Services.AuthenticatedUser;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace BellosoftWebApi.Services
@@ -21,17 +22,21 @@ namespace BellosoftWebApi.Services
             return claim != null ? int.Parse(claim.Value) : null;
         }
 
-        public async Task<User?> GetActiveUser()
+        public async Task<AuthUserData?> GetActiveUser()
         {
             int? id = GetUserId();
             if (id is null)
                 return null;
 
-            User? user = await context.Users.FindAsync(id.Value);
-            if (user is null || user.IsSoftDeleted)
+            AuthUserData? authUser = await context.Users
+                .Where(user => user.Id == id)
+                .Select(user => new AuthUserData(user.Id, user.SelectedDeckId, user.UpdatedAt, user.DeletedAt))
+                .FirstOrDefaultAsync();
+
+            if (authUser is null || authUser.IsSoftDeleted)
                 return null;
 
-            return user;
+            return authUser;
         }
     }
 }

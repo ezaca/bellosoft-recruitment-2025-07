@@ -15,11 +15,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Caching.SqlServer" Version="9.0.6" />
+    <PackageReference Include="Sqids" Version="3.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DeckOfCardsApi\" />
   </ItemGroup>
 
 </Project>
