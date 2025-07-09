@@ -120,6 +120,7 @@ namespace BellosoftWebApi.Controllers
             string newPassword = BCryptNet.HashPassword(request.NewPassword);
             EntityEntry<User> userEntity = context.Users.Attach(new User(user.Id));
             userEntity.SetProperty(u => u.Password, newPassword);
+            userEntity.SetProperty(u => u.UpdatedAt, DateTime.UtcNow);
 
             await context.SaveChangesAsync();
             return Ok(new MessageResponse("Senha alterada"));
