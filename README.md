@@ -22,6 +22,7 @@ Para esta aplicação, dentro das instruções, optou-se pelas seguintes escolha
 - Uso da API externa [https://deckofcardsapi.com](https://deckofcardsapi.com), que permite montar um baralho comum (francês), fornece uma chave (ID) por baralho, permite pescar cartas, dentre outras funcionalidades.
 - "Soft delete" para todas as operações, onde o registro não será apagado da base de dados, apenas terá a data de exclusão ajustada.
 - Apenas autenticação com e-mail e senha sem verificação serão suportadas.
+- Não será utilizado "secrets.json", pois o uso do banco de dados LocalDB utiliza autenticação Windows. Se necessário, utilize "appsettings.Development.json" ou 
 
 # Limitações
 
@@ -65,6 +66,42 @@ Siga estes passos antes de iniciar o teste:
 
 # Como testar?
 
-*Aqui será adicionado um tutorial de como configurar e preparar o projeto para execução*.
+Para facilitar o teste, utilizaremos o Visual Studio, que instalará os certificados HTTPS necessários. É possível fazer manualmente ou hospedar, mas para fins de demonstração, o Visual Studio auxiliará em alguns aspectos.
 
-Veja as limitações conhecidas
+Para executar o servidor:
+
+1. Certifique-se de ter executado corretamente a instalação da configuração e banco de dados LocalDB
+2. Abra o projeto (.sln) no Visual Studio 2022
+3. Certifique-se de estar na versão correta do Visual Studio e de ter as ferramentas e requisitos instalados corretamente
+4. Selecione o menu `Build > Configuration Manager` e deixe "Active solution configuration" como "Debug" ou "Release", de acordo com a preferência
+5. Selecione o menu `Debug > Start Without Debugging` ou pression Ctrl+F5 (mapeamento de atalhos padrão)
+6. Confirme qualquer notificação de certificado, e aguarde abrir o navegador padrão com o Swagger, ou acesse o endereço indicado no Console com a rota para o Swagger (ex.: https://localhost:5000/swagger/index.html)
+
+Após abrir o Swagger:
+
+1. Você poderá navegar pela API.
+2. Para iniciar, crie um usuário na seção `Auth > /api/auth/signup` e clique em "Try it out". A requisição padrão atende aos requisitos mínimos de e-mail e senha, clique em "Execute". Espera-se um retorno 200 OK.
+3. Na seção Auth é possível:
+    1. Criar usuário em `/api/auth/signup` (feito no passo 2)
+    2. Fazer login em `/api/auth/login`
+    3. Fazer logout em `/api/auth/logout`
+    4. Trocar a senha (inclusive por ela mesma) em `/api/auth/change-password` (requer estar logado).
+4. Na seção Deck é possível (é necessário estar logado):
+    1. Criar baralho na API externa em `/api/deck/create`
+    2. Listar os baralhos do usuário em `/api/deck/list`
+    3. Criar baralho na API externa em `/api/deck/create`
+    4. Selecionar o baralho desejado em `/api/deck/select`
+    5. Pescar a quantidade desejada de cartas em `/api/deck/draw`
+5. Na seção Reports não é necessário login (decisão para demonstração), e é possível:
+    1. Gerar o relatório SQL em `/api/reports/active-decks-sql`
+    2. Gerar o relatório LINQ equivalente em `/api/reports/active-decks-linq`
+
+Veja as seções de limitações e de limitações conhecidas para mais informações.
+
+-----
+
+<p align="center">
+Eliakim Zacarias
+<br>Bacharelado em Ciência da Computação, Mestrado em Engenharia Elétrica
+<br>Projeto criado para 10 de julho de 2025, para o processo de seleção da empresa Bellosoft.
+</p>
