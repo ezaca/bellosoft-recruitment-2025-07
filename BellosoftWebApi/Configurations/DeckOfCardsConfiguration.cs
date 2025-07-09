@@ -1,9 +1,10 @@
 ﻿namespace BellosoftWebApi.Configurations
 {
+    [Serializable]
     public class DeckOfCardsConfiguration
     {
-        public string BaseUrl;
-        public string CreateDeckPath;
-        public string DrawCardPath;
+        public string BaseUrl { get; set; }
+        public string CreateDeckPath { get; set; }
+        public string DrawCardPath { get; set; }
     }
 }
