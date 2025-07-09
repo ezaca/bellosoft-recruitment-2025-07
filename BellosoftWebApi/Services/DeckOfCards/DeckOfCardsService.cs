@@ -14,31 +14,31 @@ namespace BellosoftWebApi.Services
         private readonly string drawCardPath;
         private readonly HttpClient httpClient;
 
-        public DeckOfCardsService(IOptions<DeckOfCardsConfiguration> configuration, IHttpClientFactory httpClientFactory)
+        public DeckOfCardsService(IOptions<DeckOfCardsConfiguration> configuration, HttpClient httpClient)
         {
             DeckOfCardsConfiguration config = configuration.Value;
             baseUrl = config.BaseUrl;
             createDeckPath = config.CreateDeckPath;
             drawCardPath = config.DrawCardPath;
-            httpClient = httpClientFactory.CreateClient();
+            this.httpClient = httpClient;
         }
 
-        public async Task<DeckCreateApiResponse?> CreateDeck(int amount)
+        public async Task<ApiDeckCreateResponse?> CreateDeck(int amount)
         {
             string url = baseUrl + string.Format(createDeckPath, amount);
-            DeckCreateApiResponse? response = await httpClient.GetFromJsonAsync<DeckCreateApiResponse>(url);
+            ApiDeckCreateResponse? response = await httpClient.GetFromJsonAsync<ApiDeckCreateResponse>(url);
             return response;
         }
 
-        public async Task<DeckDrawResponse?> DrawCard(string id, int amount)
+        public async Task<ApiDeckDrawResponse?> DrawCard(string id, int amount)
         {
             id = Uri.EscapeDataString(id);
 
             if (!ValidIdRegex.IsMatch(id))
-                return new DeckDrawResponse() { Success = false, Error = "O ID não está em um formato válido." };
+                return new ApiDeckDrawResponse() { Success = false, Error = "O ID não está em um formato válido." };
 
             string url = baseUrl + string.Format(drawCardPath, id, amount);
-            DeckDrawResponse? response = await httpClient.GetFromJsonAsync<DeckDrawResponse>(url);
+            ApiDeckDrawResponse? response = await httpClient.GetFromJsonAsync<ApiDeckDrawResponse>(url);
             return response;
         }
     }

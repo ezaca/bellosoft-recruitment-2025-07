@@ -4,7 +4,7 @@ namespace BellosoftWebApi.Services
 {
     public interface IDeckOfCards
     {
-        public Task<DeckCreateApiResponse> CreateDeck(int amount);
-        public Task<DeckDrawResponse> DrawCard(string id, int amount);
+        public Task<ApiDeckCreateResponse?> CreateDeck(int amount);
+        public Task<ApiDeckDrawResponse?> DrawCard(string id, int amount);
     }
 }
