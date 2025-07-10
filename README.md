@@ -102,6 +102,6 @@ Veja as seções de limitações e de limitações conhecidas para mais informa�
 
 <p align="center">
 Eliakim Zacarias
-<br>Bacharelado em Ciência da Computação, Mestrado em Engenharia Elétrica
+<br>Bacharel em Ciência da Computação, Mestre em Engenharia Elétrica
 <br>Projeto criado para 10 de julho de 2025, para o processo de seleção da empresa Bellosoft.
 </p>
